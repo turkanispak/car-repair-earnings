@@ -1,0 +1,119 @@
+//Daily Car Repair Earning of a Company Program for C
+#include <stdio.h>
+#include <math.h>
+int main(void)
+{
+    //Variable Declaration
+	int arvhr, arvmin, dephr, depmin;
+	double totime, tocharge,income=0;
+	char prompt,vehicle,repair,sprepair;
+	//Prompt user to continue or not
+	printf("Input I for inputting arrival and departure time or E to exit: ");
+	scanf(" %c",&prompt);
+	//While assures when E is entered, program will exit
+	while (prompt != 'E')
+	{
+	    //Ask user for vehicle type
+		printf("Input Type of vehicle ? ");
+		scanf(" %c", &vehicle);
+		//Ask user for time in and out
+		printf("Input Hour vehicle arrived ( 0 - 24 ) ? ");
+		scanf(" %d", &arvhr);
+		printf("Input Minute vehicle arrived ( 0 - 60 ) ? ");
+		scanf(" %d", &arvmin);
+		printf("Input Hour vehicle left ( 0 - 24 ) ? ");
+		scanf(" %d", &dephr);
+		printf("Input Minute vehicle left ( 0 - 60 ) ? ");
+		scanf(" %d", &depmin);
+		//Ask user for maintenance type, typo(inut) is made on purpose as per sample run's output
+		printf("Inut Type of the maintenance (T: Tire change/repair, L: Oil Change, M: Mechanical repair, O:Other) : ");
+		scanf(" %c", &repair);
+		if(repair=='M')
+		{
+			printf("Input Type of mechanical repair (S: Simple, C: Complex) : ");
+			scanf(" %c",&sprepair);
+		}
+		printf("---------- \n");
+		//Please note that labor cost is calculated on TL/hr so floating point is allowed for labor cost
+		totime = (dephr - arvhr) + (fabs(depmin - arvmin) / 60);
+		//fabs returns absolute value of DOUBLE types,minute part is indexed accordingly to display.
+		//Switch evaluates vehicle type to calculate the costs for each vehicle type.
+		switch (vehicle)
+		{
+		case 'C':
+
+			if (repair == 'T')
+				tocharge = 80 * totime + 20 * totime;
+			else if(repair == 'L')
+				tocharge = 120 * totime + 20 * totime;
+			else if (repair == 'M')
+			{
+				if(sprepair=='S')
+					tocharge = 200 * totime + 20 * totime;
+				else if (sprepair == 'C')
+					tocharge = 500 * totime + 20 * totime;
+			}
+			else if (repair == 'O')
+				tocharge = 500 * totime + 20 * totime;
+
+			income += tocharge;
+			printf("Type of vehicle : Car\n");
+			break;
+
+		case 'T':
+
+			if (repair == 'T')
+				tocharge = 100 * totime + 20 * totime;
+			else if (repair == 'L')
+				tocharge = 150 * totime + 20 * totime;
+			else if (repair == 'M')
+			{
+				if (sprepair == 'S')
+					tocharge = 200 * totime + 20 * totime;
+				else if (sprepair == 'C')
+					tocharge = 500 * totime + 20 * totime;
+			}
+			else if (repair == 'O')
+				tocharge = 700 * totime + 20 * totime;
+			printf("Type of vehicle : Truck\n");
+			income += tocharge;
+			break;
+
+		case 'B':
+
+			if (repair == 'T')
+				tocharge = 150 * totime + 20 * totime;
+			else if (repair == 'L')
+				tocharge = 200 * totime + 20 * totime;
+			else if (repair == 'M')
+			{
+				if (sprepair == 'S')
+					tocharge = 200 * totime + 20 * totime;
+				else if (sprepair == 'C')
+					tocharge = 500 * totime + 20 * totime;
+			}
+			else if (repair == 'O')
+				tocharge = 1000 * totime + 20 * totime;
+			printf("Type of vehicle : Bus\n");
+			income += tocharge;
+			break;
+
+		default:
+			printf("Wrong input try again");
+			break;
+		}
+		//%02d's are added for the sake of aesthetics
+		printf("TIME-IN			    %02d : %02d\n", arvhr, arvmin);
+		printf("TIME-OUT	            %02d: %02d\n", dephr, depmin);
+		printf("Total Time:                  %.2lf hours",totime);
+		printf("\n ---------- \n");
+		//Display total charge
+		printf("TOTAL CHARGE FOR CUSTOMER %.2lf TL + %.lfTL labor= %.lfTL \n**********\n", (tocharge- 20 * totime), (20 * totime), tocharge);
+		//Prompt user to continue or not
+		printf("Input I for inputting arrival and departure time or E to exit:");
+		scanf(" %c", &prompt);
+	}
+	//Display daily income
+	printf("Total Daily Income: %.2lf TL \nBYE",income);
+	return 0;
+}
