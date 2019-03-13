@@ -28,6 +28,7 @@ The output format is shown below for each customer.
  
  
 Sample Run: 
+
 Input I for inputting arrival and departure time or E to exit: I 
 Input Type of vehicle ? C 
 Input Hour vehicle arrived ( 0 - 24 ) ? 14 
